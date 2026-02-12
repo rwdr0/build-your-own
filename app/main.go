@@ -3,6 +3,9 @@ package main
 import (
 	"fmt"
 	"os"
+
+	"github.com/rwdr0/build-your-own/git/app/catfile"
+	_init "github.com/rwdr0/build-your-own/git/app/init"
 )
 
 // Usage: your_program.sh <command> <arg1> <arg2> ...
@@ -17,9 +20,9 @@ func main() {
 
 	switch command := os.Args[1]; command {
 	case "init":
-		Init()
+		_init.Init()
 	case "cat-file":
-		CatFile()
+		catfile.CatFile()
 
 	default:
 		fmt.Fprintf(os.Stderr, "Unknown command %s\n", command)
