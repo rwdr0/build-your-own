@@ -6,4 +6,4 @@
 | --------------------------------------------------------------- | -------- | ---------------- |
 | [ Sqlite ](https://app.codecrafters.io/courses/sqlite/overview) | Go       | 9/9 ✅           |
 | [ Grep ](https://app.codecrafters.io/courses/grep/overview)     | Go       | 1/19             |
-| [ Git ](https://app.codecrafters.io/courses/git/overview)       | Go       | 1/7              |
+| [ Git ](https://app.codecrafters.io/courses/git/overview)       | Go       | 4/7              |
