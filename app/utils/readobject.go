@@ -1,26 +1,14 @@
-// Package catfile => stage #4
-package catfile
+package utils
 
 import (
-	"bytes"
 	"compress/zlib"
-	"fmt"
 	"io"
 	"log"
 	"os"
 	"path/filepath"
-
-	"github.com/rwdr0/build-your-own/git/app/utils"
 )
 
-func CatFile() {
-	objectHash := utils.GetArgumentsForStage(3)[0]
-	data := readObject(objectHash)
-	_, content, _ := bytes.Cut(data, []byte{0})
-	fmt.Print(string(content))
-}
-
-func readObject(hash string) []byte {
+func ReadObject(hash string) []byte {
 	path := filepath.Join(".git", "objects", hash[:2], hash[2:])
 
 	f, err := os.Open(path)

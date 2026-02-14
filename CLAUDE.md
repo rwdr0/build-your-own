@@ -47,4 +47,10 @@ mkdir -p /tmp/testing && cd /tmp/testing
 - The `init` package is imported as `_init` to avoid collision with Go's builtin
 - Git objects are read by decompressing zlib data from `.git/objects/<hash[:2]>/<hash[2:]>`
 - Go 1.24, no external dependencies
-- Fro tests, use helpers from `app/utils/testhelpers.go`
+
+### Testing
+
+- Read all tests before writing a new one
+- Write tests by comparing against real git command
+- Write tests in the dedicated package folder with <stage-name>\_test pattern.
+- use helpers from `app/utils/testhelpers.go`

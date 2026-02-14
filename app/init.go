@@ -1,5 +1,4 @@
-// Package initcmd => stage #3
-package initcmd
+package main
 
 import (
 	"fmt"
