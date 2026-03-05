@@ -16,12 +16,17 @@ func LsTree(objectHash string) {
 	names := make([]string, 0)
 	var name strings.Builder
 
-	for _, byte := range content {
+	for i := 0; i < len(content); i++ {
+		byte := content[i]
+
 		switch byte {
 		case ' ':
 			name.Reset()
 		case 0:
 			names = append(names, name.String())
+			name.Reset()
+			i += 20
+
 		default:
 			name.WriteByte(byte)
 		}
