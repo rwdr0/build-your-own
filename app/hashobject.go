@@ -8,13 +8,9 @@ import (
 	"log"
 	"os"
 	"path/filepath"
-
-	"github.com/rwdr0/build-your-own/git/app/utils"
 )
 
-func HashObject() {
-	inputFileName := utils.GetArgumentsForStage(3)[0]
-
+func HashObject(inputFileName string) {
 	content, err := os.ReadFile(inputFileName)
 	if err != nil {
 		log.Fatal("HashObject could not read file")
