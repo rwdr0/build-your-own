@@ -8,7 +8,8 @@ import (
 	"github.com/rwdr0/build-your-own/git/app/utils"
 )
 
-func LsTree(objectHash string) {
+func LsTree() {
+	objectHash := utils.GetArgumentsForStage(3)[0]
 	objectBinary := utils.ReadObject(objectHash)
 	zeroByteIdx := bytes.IndexByte(objectBinary, 0)
 	content := objectBinary[zeroByteIdx+1:]

@@ -3,8 +3,6 @@ package main
 import (
 	"fmt"
 	"os"
-
-	"github.com/rwdr0/build-your-own/git/app/utils"
 )
 
 // Usage: your_program.sh <command> <arg1> <arg2> ...
@@ -21,13 +19,13 @@ func main() {
 	case "init":
 		Init()
 	case "cat-file":
-		CatFile(utils.GetArgumentsForStage(3)[0])
+		CatFile()
 	case "hash-object":
-		HashObject(utils.GetArgumentsForStage(3)[0], true)
+		HashObject()
 	case "ls-tree":
-		LsTree(utils.GetArgumentsForStage(3)[0])
+		LsTree()
 	case "write-tree":
-		WriteTree(".", true)
+		WriteTree()
 
 	default:
 		fmt.Fprintf(os.Stderr, "Unknown command %s\n", command)

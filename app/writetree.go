@@ -9,7 +9,11 @@ import (
 	"github.com/rwdr0/build-your-own/git/app/utils"
 )
 
-func WriteTree(rootDirectory string, printHash bool) [20]byte {
+func WriteTree() {
+	writeTree(".", true) // internal recursive implementation
+}
+
+func writeTree(rootDirectory string, printHash bool) [20]byte {
 	directoryEntries, err := os.ReadDir(rootDirectory)
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error: %v\n", err)
@@ -29,7 +33,7 @@ func WriteTree(rootDirectory string, printHash bool) [20]byte {
 				continue
 			}
 			mode = []byte("40000")
-			objectHash = WriteTree(entryPath, false)
+			objectHash = writeTree(entryPath, false)
 		} else {
 			info, _ := entry.Info()
 
@@ -37,7 +41,7 @@ func WriteTree(rootDirectory string, printHash bool) [20]byte {
 			if info.Mode().Perm()&0o111 != 0 {
 				mode = []byte("100755")
 			}
-			objectHash = HashObject(entryPath, false)
+			objectHash = utils.HashObject(entryPath, false)
 		}
 
 		treeObject = append(treeObject, mode...)
