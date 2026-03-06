@@ -23,9 +23,11 @@ func main() {
 	case "cat-file":
 		CatFile(utils.GetArgumentsForStage(3)[0])
 	case "hash-object":
-		HashObject(utils.GetArgumentsForStage(3)[0])
+		HashObject(utils.GetArgumentsForStage(3)[0], true)
 	case "ls-tree":
 		LsTree(utils.GetArgumentsForStage(3)[0])
+	case "write-tree":
+		WriteTree(".", true)
 
 	default:
 		fmt.Fprintf(os.Stderr, "Unknown command %s\n", command)
