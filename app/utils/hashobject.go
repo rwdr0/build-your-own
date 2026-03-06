@@ -13,8 +13,7 @@ func HashObject(sourcePath string, printHash bool) [20]byte {
 	}
 
 	formattedContent := fmt.Sprintf("blob %d\x00%s", len(content), content)
-	hash := WriteObject([]byte(formattedContent))
-	hexHash := fmt.Sprintf("%x", hash)
+	hash, hexHash := WriteObject([]byte(formattedContent))
 
 	if printHash {
 		fmt.Println(hexHash)

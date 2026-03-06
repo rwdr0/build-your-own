@@ -26,6 +26,8 @@ func main() {
 		LsTree()
 	case "write-tree":
 		WriteTree()
+	case "commit-tree":
+		CommitTree()
 
 	default:
 		fmt.Fprintf(os.Stderr, "Unknown command %s\n", command)

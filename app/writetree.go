@@ -54,10 +54,9 @@ func writeTree(rootDirectory string, printHash bool) [20]byte {
 	header := fmt.Sprintf("tree %d\x00", len(treeObject))
 	treeObject = append([]byte(header), treeObject...)
 
-	hash := utils.WriteObject(treeObject)
+	hash, hexHash := utils.WriteObject(treeObject)
 
 	if printHash {
-		hexHash := fmt.Sprintf("%x", hash)
 		fmt.Println(hexHash)
 	}
 
