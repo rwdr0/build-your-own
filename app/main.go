@@ -28,6 +28,8 @@ func main() {
 		WriteTree()
 	case "commit-tree":
 		CommitTree()
+	case "clone":
+		Clone()
 
 	default:
 		fmt.Fprintf(os.Stderr, "Unknown command %s\n", command)
