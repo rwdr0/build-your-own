@@ -1,17 +1,8 @@
 package utils
 
-import (
-	"fmt"
-	"log"
-	"os"
-)
+import "fmt"
 
-func HashObject(sourcePath string, printHash bool) [20]byte {
-	content, err := os.ReadFile(sourcePath)
-	if err != nil {
-		log.Fatal("HashObject could not read file")
-	}
-
+func HashObject(content []byte, printHash bool) [20]byte {
 	formattedContent := fmt.Sprintf("blob %d\x00%s", len(content), content)
 	hash, hexHash := WriteObject([]byte(formattedContent))
 

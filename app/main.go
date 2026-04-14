@@ -25,7 +25,7 @@ func main() {
 	case "ls-tree":
 		LsTree()
 	case "write-tree":
-		WriteTree()
+		WriteTree(".", true)
 	case "commit-tree":
 		CommitTree()
 	case "clone":
