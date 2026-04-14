@@ -9,6 +9,8 @@ import (
 	"path/filepath"
 )
 
+// WriteObject compresses content with zlib, writes it to .git/objects under
+// its SHA-1 hash, and returns the raw hash and its hex-encoded string.
 func WriteObject(content []byte) ([20]byte, string) {
 	hash := sha1.Sum(content)
 	hexHash := fmt.Sprintf("%x", hash)

@@ -7,6 +7,8 @@ import (
 	"github.com/rwdr0/build-your-own/git/app/utils"
 )
 
+// HashObject implements the "git hash-object -w" command, reading a file from
+// disk, writing it as a blob object, and printing its SHA-1 hash to stdout.
 func HashObject() {
 	sourcePath := utils.GetArgumentsForStage(3)[0]
 	content, err := os.ReadFile(sourcePath)

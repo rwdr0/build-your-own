@@ -5,6 +5,8 @@ import (
 	"os"
 )
 
+// Init implements the "git init" command, creating the .git directory structure
+// and writing the initial HEAD file pointing to refs/heads/main.
 func Init() {
 	for _, dir := range []string{".git", ".git/objects", ".git/refs"} {
 		if err := os.MkdirAll(dir, 0o755); err != nil {

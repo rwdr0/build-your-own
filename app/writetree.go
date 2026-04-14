@@ -10,6 +10,8 @@ import (
 	"github.com/rwdr0/build-your-own/git/app/utils"
 )
 
+// WriteTree implements the "git write-tree" command
+// optionally prints the root tree's SHA-1 hash.
 func WriteTree(dir string, printHash bool) []byte {
 	body, _, hexHash := writeTree(dir)
 	if printHash {
@@ -18,6 +20,8 @@ func WriteTree(dir string, printHash bool) []byte {
 	return body
 }
 
+// writeTree recursively builds and writes a tree object for rootDirectory.
+// It returns the tree body, its SHA-1 hash, and its hex-encoded hash string.
 func writeTree(rootDirectory string) ([]byte, [20]byte, string) {
 	directoryEntries, err := os.ReadDir(rootDirectory)
 	if err != nil {
