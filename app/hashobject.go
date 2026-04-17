@@ -15,5 +15,5 @@ func HashObject() {
 	if err != nil {
 		log.Fatal("HashObject could not read file")
 	}
-	utils.HashObject(content, true)
+	utils.HashObject(content, "blob", utils.HashOptions{PrintHash: true, WriteHash: true})
 }
