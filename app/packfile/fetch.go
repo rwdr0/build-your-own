@@ -81,21 +81,22 @@ func fetchRefs(url string) ([]string, error) {
 
 // fetchPackfile sends a fetch request for the given ref hashes and streams the
 // sideband-1 pack data from the server's response, returning the raw packfile bytes.
-func fetchPackfile(url string, refs []string) ([]byte, error) {
-	var sb strings.Builder
-	sb.WriteString("0011command=fetch")
-	sb.WriteString("0016object-format=sha1")
-	sb.WriteString("0001")
-	sb.WriteString("000dofs-delta")
+func FetchPackfile(url string, refs []string) ([]byte, error) {
+	var requestPayload strings.Builder
 
+	requestPayload.WriteString(
+		"0012command=fetch\n" +
+			"0017object-format=sha1\n" +
+			"0001" +
+			"000eofs-delta\n",
+	)
 	for _, ref := range refs {
-		sb.WriteString(fmt.Sprintf("0032want %s\n", ref))
+		fmt.Fprintf(&requestPayload, "0032want %s\n", ref)
 	}
+	requestPayload.WriteString("0009done\n")
+	requestPayload.WriteString("0000")
 
-	sb.WriteString("0009done\n")
-	sb.WriteString("0000")
-
-	req, err := http.NewRequest("POST", url+"/git-upload-pack", strings.NewReader(sb.String()))
+	req, err := http.NewRequest("POST", url+"/git-upload-pack", strings.NewReader(requestPayload.String()))
 	if err != nil {
 		return nil, err
 	}
