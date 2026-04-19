@@ -15,7 +15,7 @@ func TestUnpack_WritesNonDeltaObjects(t *testing.T) {
 	tmpDir := t.TempDir()
 	utils.RunCmd(t, tmpDir, "git", "init")
 
-	packData, err := fetchPackfile(testURL, []string{wantHash})
+	packData, err := FetchPackfile(testURL, []string{wantHash})
 	if err != nil {
 		t.Fatalf("fetchPackfile failed: %v", err)
 	}

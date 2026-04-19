@@ -28,7 +28,7 @@ func (ofsDelta *ofsDeltaObject) resolveDelta(packFile []byte, resolvedDeltasCach
 		objectType:    base.objectType,
 		resolvedDelta: applyDelta(base.resolvedDelta, ofsDelta.instructions),
 	}
-	utils.HashObject(resolved.resolvedDelta, resolved.objectType, utils.HashOptions{WriteHash: true})
+	utils.HashObject(resolved.resolvedDelta, resolved.objectType, utils.HashOptions{Write: true})
 	return resolved
 }
 

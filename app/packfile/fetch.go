@@ -8,25 +8,9 @@ import (
 	"strings"
 )
 
-// Fetch retrieves a packfile from a remote git repository at url using the
-// smart HTTP protocol (git-upload-pack), returning the raw pack data.
-func Fetch(url string) ([]byte, error) {
-	refs, err := fetchRefs(url)
-	if err != nil {
-		return nil, err
-	}
-
-	packfile, err := fetchPackfile(url, refs)
-	if err != nil {
-		return nil, err
-	}
-
-	return packfile, nil
-}
-
-// fetchRefs sends an ls-refs request to the remote and returns the SHA-1
+// FetchRefs sends an ls-refs request to the remote and returns the SHA-1
 // hashes of all advertised refs under refs/heads/ and HEAD.
-func fetchRefs(url string) ([]string, error) {
+func FetchRefs(url string) ([]string, error) {
 	body := "0014command=ls-refs\n" +
 		"0016object-format=sha1" +
 		"0001" +
@@ -79,7 +63,7 @@ func fetchRefs(url string) ([]string, error) {
 	return refs, nil
 }
 
-// fetchPackfile sends a fetch request for the given ref hashes and streams the
+// FetchPackfile sends a fetch request for the given ref hashes and streams the
 // sideband-1 pack data from the server's response, returning the raw packfile bytes.
 func FetchPackfile(url string, refs []string) ([]byte, error) {
 	var requestPayload strings.Builder

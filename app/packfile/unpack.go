@@ -49,7 +49,7 @@ func Unpack(packFile []byte) {
 
 		default:
 			content := decompressZlib(r)
-			utils.HashObject(content, typeName(objType), utils.HashOptions{WriteHash: true})
+			utils.HashObject(content, typeName(objType), utils.HashOptions{Write: true})
 			resolvedDeltasCache[ownOffset] = deltaCache{
 				objectType:    typeName(objType),
 				resolvedDelta: content,

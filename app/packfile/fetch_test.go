@@ -16,7 +16,7 @@ func TestFetch_VerifyPack(t *testing.T) {
 	tmpDir := t.TempDir()
 	utils.RunCmd(t, tmpDir, "git", "init")
 
-	packData, err := fetchPackfile(testURL, refs)
+	packData, err := FetchPackfile(testURL, refs)
 	if err != nil {
 		t.Fatalf("fetchPackfile failed: %v", err)
 	}

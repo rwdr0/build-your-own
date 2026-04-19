@@ -54,7 +54,7 @@ func writeTree(rootDirectory string) ([]byte, [20]byte, string) {
 			if err != nil {
 				log.Fatal("WriteTree could not read file: ", entryPath)
 			}
-			objectHash = utils.HashObject(fileContent, "blob", utils.HashOptions{WriteHash: true})
+			objectHash = utils.HashObject(fileContent, "blob", utils.HashOptions{Write: true})
 		}
 
 		treeBody = append(treeBody, mode...)
