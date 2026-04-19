@@ -8,6 +8,8 @@ import (
 	"github.com/rwdr0/build-your-own/git/app/utils"
 )
 
+// LsTree implements the "git ls-tree --name-only" command, printing the names
+// of all entries in a tree object identified by the given hash.
 func LsTree() {
 	objectHash := utils.GetArgumentsForStage(3)[0]
 	objectBinary := utils.ReadObject(objectHash)

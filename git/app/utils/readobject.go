@@ -8,6 +8,8 @@ import (
 	"path/filepath"
 )
 
+// ReadObject reads and decompresses a git object from .git/objects by its
+// hex-encoded SHA-1 hash, returning the full raw content including the header.
 func ReadObject(hash string) []byte {
 	path := filepath.Join(".git", "objects", hash[:2], hash[2:])
 

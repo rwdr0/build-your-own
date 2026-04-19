@@ -3,24 +3,33 @@ package main
 import (
 	"bytes"
 	"fmt"
+	"log"
 	"os"
 	"path/filepath"
 
 	"github.com/rwdr0/build-your-own/git/app/utils"
 )
 
-func WriteTree() {
-	writeTree(".", true) // internal recursive implementation
+// WriteTree implements the "git write-tree" command
+// optionally prints the root tree's SHA-1 hash.
+func WriteTree(dir string, printHash bool) []byte {
+	body, _, hexHash := writeTree(dir)
+	if printHash {
+		fmt.Println(hexHash)
+	}
+	return body
 }
 
-func writeTree(rootDirectory string, printHash bool) [20]byte {
+// writeTree recursively builds and writes a tree object for rootDirectory.
+// It returns the tree body, its SHA-1 hash, and its hex-encoded hash string.
+func writeTree(rootDirectory string) ([]byte, [20]byte, string) {
 	directoryEntries, err := os.ReadDir(rootDirectory)
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error: %v\n", err)
 		os.Exit(1)
 	}
 
-	treeObject := make([]byte, 0, 5000)
+	treeBody := make([]byte, 0, 5000)
 
 	for _, entry := range directoryEntries {
 		var mode []byte
@@ -33,7 +42,7 @@ func writeTree(rootDirectory string, printHash bool) [20]byte {
 				continue
 			}
 			mode = []byte("40000")
-			objectHash = writeTree(entryPath, false)
+			_, objectHash, _ = writeTree(entryPath)
 		} else {
 			info, _ := entry.Info()
 
@@ -41,25 +50,23 @@ func writeTree(rootDirectory string, printHash bool) [20]byte {
 			if info.Mode().Perm()&0o111 != 0 {
 				mode = []byte("100755")
 			}
-			objectHash = utils.HashObject(entryPath, false)
+			fileContent, err := os.ReadFile(entryPath)
+			if err != nil {
+				log.Fatal("WriteTree could not read file: ", entryPath)
+			}
+			objectHash = utils.HashObject(fileContent, "blob", utils.HashOptions{Write: true})
 		}
 
-		treeObject = append(treeObject, mode...)
-		treeObject = append(treeObject, ' ')
-		treeObject = append(treeObject, entryName...)
-		treeObject = append(treeObject, 0)
-		treeObject = append(treeObject, objectHash[:]...) // The slice operator [:] converts a fixed-size array to a slice.
+		treeBody = append(treeBody, mode...)
+		treeBody = append(treeBody, ' ')
+		treeBody = append(treeBody, entryName...)
+		treeBody = append(treeBody, 0)
+		treeBody = append(treeBody, objectHash[:]...)
 	}
 
-	header := fmt.Sprintf("tree %d\x00", len(treeObject))
-	treeObject = append([]byte(header), treeObject...)
+	header := fmt.Sprintf("tree %d\x00", len(treeBody))
+	full := append([]byte(header), treeBody...)
+	hash, hexHash := utils.WriteObject(full)
 
-	hash := utils.WriteObject(treeObject)
-
-	if printHash {
-		hexHash := fmt.Sprintf("%x", hash)
-		fmt.Println(hexHash)
-	}
-
-	return hash
+	return treeBody, hash, hexHash
 }

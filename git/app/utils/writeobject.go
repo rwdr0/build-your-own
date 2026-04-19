@@ -9,7 +9,9 @@ import (
 	"path/filepath"
 )
 
-func WriteObject(content []byte) [20]byte {
+// WriteObject compresses content with zlib, writes it to .git/objects under
+// its SHA-1 hash, and returns the raw hash and its hex-encoded string.
+func WriteObject(content []byte) ([20]byte, string) {
 	hash := sha1.Sum(content)
 	hexHash := fmt.Sprintf("%x", hash)
 	destinationPath := fmt.Sprintf(".git/objects/%s/%s", hexHash[:2], hexHash[2:])
@@ -22,5 +24,5 @@ func WriteObject(content []byte) [20]byte {
 	os.MkdirAll(filepath.Dir(destinationPath), 0o755)
 	os.WriteFile(destinationPath, buf.Bytes(), 0o644)
 
-	return hash
+	return hash, hexHash
 }

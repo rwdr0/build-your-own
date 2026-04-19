@@ -7,6 +7,8 @@ import (
 	"testing"
 )
 
+// RunCmd runs an external command in dir and returns its trimmed stdout.
+// It calls t.Fatal if the command exits with a non-zero status.
 func RunCmd(t *testing.T, dir string, command ...string) string {
 	t.Helper()
 
